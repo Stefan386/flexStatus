@@ -1,9 +1,5 @@
 package com.flex.status;
 
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
 
 public class Status {
@@ -14,18 +10,19 @@ public class Status {
         String serviceURL = "http://demo0657008.mockable.io/getStatus?nr="+packageNr; //mock return only status 'delivered'
 
         RestTemplate restTemplate = new RestTemplate();
-        String status = "null";
+        String status;
 
+        status = restTemplate.getForObject(serviceURL,String.class); //returns JSONObject
 
-        String result = restTemplate.getForObject(serviceURL,String.class);
-
+        /**
+        //converting JSON result to String;
         try {
-            JSONObject jsonObject = new JSONObject(result);
+            JSONObject jsonObject = new JSONObject(status);
             status = jsonObject.getString("status");
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        */
         return status;
     }
 }
