@@ -5,13 +5,12 @@ import org.springframework.web.client.RestTemplate;
 public class Status {
 
 
-    public String getStatusFromApi(int packageNr){ //get status from Service-Provider-API
-
-        String serviceURL = "http://demo0657008.mockable.io/getStatus?nr="+packageNr; //mock return only status 'delivered'
-
-        RestTemplate restTemplate = new RestTemplate();
+    public String getStatusFromApi(String packageNr, String username){ //get status from Service-Provider-API
         String status;
 
+
+        String serviceURL = "http://demo0657008.mockable.io/getStatus?nr="+packageNr; //mock return only status 'delivered'
+        RestTemplate restTemplate = new RestTemplate();
         status = restTemplate.getForObject(serviceURL,String.class); //returns JSONObject
 
         /**
