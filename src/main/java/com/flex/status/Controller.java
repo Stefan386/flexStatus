@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalTime;
 import java.util.*;
 
 @RestController
@@ -22,7 +23,7 @@ public class Controller {
         //logRequest
         RequestLogger requestLog = new RequestLogger(packageNr, username, status);
         requestLoggerList.add(requestLog);
-        System.out.print(requestLoggerList.size());
+        System.out.println(requestLoggerList.size());
 
         return status;
     }
@@ -31,6 +32,8 @@ public class Controller {
     public int getLoggedRequests(){
 
        int sizeOfRequestList =  requestLoggerList.size();
+        LocalTime timeStamp = requestLoggerList.get(0).getTimestamp();
+        System.out.println(timeStamp);
 
         return sizeOfRequestList;
     }
