@@ -41,4 +41,17 @@ public class Controller {
 
         return details;
     }
+    @RequestMapping("/getLoggedRequestsByUser") //return requests of one user
+    public String getLoggedRequestsByUser(@RequestParam(value="username", defaultValue = "") String username){
+        String details = "";
+    int i = 0;
+    while(i < requestLoggerList.size()){
+
+        if(requestLoggerList.get(i).getUsername().equals(username)){
+            details = details+requestLoggerList.get(i).getAllDetails();
+        }
+        i++;
+    }
+    return details;
+    }
 }
