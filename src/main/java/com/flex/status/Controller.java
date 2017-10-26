@@ -29,12 +29,16 @@ public class Controller {
     }
 
     @RequestMapping("/getLoggedRequests")
-    public int getLoggedRequests(){
+    public String getLoggedRequests(){
+        String details = "";
+       //int sizeOfLoggerList =  requestLoggerList.size();
+       int i = 0;
+       while(i < requestLoggerList.size()){
+           details = details+requestLoggerList.get(i).getAllDetails();
+        i++;
+        }
+        System.out.println(details);
 
-       int sizeOfRequestList =  requestLoggerList.size();
-        LocalTime timeStamp = requestLoggerList.get(0).getTimestamp();
-        System.out.println(timeStamp);
-
-        return sizeOfRequestList;
+        return details;
     }
 }

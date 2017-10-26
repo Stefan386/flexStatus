@@ -1,12 +1,11 @@
 package com.flex.status;
 
-import java.sql.Timestamp;
-import java.time.LocalTime;
-import java.time.ZoneId;
+import java.time.Instant;
+import java.util.Date;
 
 public class RequestLogger {
     private String packageNr, username, status;
-    private LocalTime timestamp;
+    private long timestamp;
 
 
     public RequestLogger(String packageNr, String username, String status){
@@ -16,11 +15,9 @@ public class RequestLogger {
 
         setPackageNr(packageNr);
         setUsername(username);
-        LocalTime localTime = LocalTime.now(ZoneId.of("GMT+02:00"));
-        setTimestamp(localTime);
+        setTimestamp();
 
-
-        logRequest(packageNr, username, status);
+        //logRequest(packageNr, username, status);
 
     }
 
@@ -48,12 +45,19 @@ public class RequestLogger {
         this.status = status;
     }
 
-    public LocalTime getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(LocalTime timestamp) {
-        this.timestamp = timestamp;
+    public Date getTimestampAsDate(){
+        Date date = new Date(timestamp);
+        return date;
+    }
+
+    public void setTimestamp() {
+        //this.timestamp = timestamp;
+        Instant instant = Instant.now();
+        timestamp = instant.toEpochMilli();
     }
 
     private void logRequest(String packageNr, String username, String status) {
@@ -61,5 +65,12 @@ public class RequestLogger {
         this.username = username;
         this.status = status;
 
+    }
+
+    public String getAllDetails(){
+        String details;
+        details = packageNr + username + status;
+
+        return details;
     }
 }
