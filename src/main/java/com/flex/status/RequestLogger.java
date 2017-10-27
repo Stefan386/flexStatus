@@ -69,7 +69,16 @@ public class RequestLogger {
 
     public String getAllDetails(){
         String details;
-        details = packageNr + username + status;
+        details = packageNr + username + status + timestamp;
+
+        details = "{\"Request\":\n" +
+                "{\n" +
+                "\"packageNr\": "+packageNr+",\n" +
+                "\"username\": "+username+",\n" +
+                "\"timestamp\": "+timestamp+",\n" +
+                "\"status\": "+status+",\n" +
+                "}\n" +
+                "}";
 
         return details;
     }

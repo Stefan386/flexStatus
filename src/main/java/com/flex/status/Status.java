@@ -1,5 +1,7 @@
 package com.flex.status;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
 
 public class Status {
@@ -13,7 +15,7 @@ public class Status {
         RestTemplate restTemplate = new RestTemplate();
         status = restTemplate.getForObject(serviceURL,String.class); //returns JSONObject
 
-        /**
+
         //converting JSON result to String;
         try {
             JSONObject jsonObject = new JSONObject(status);
@@ -21,7 +23,7 @@ public class Status {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        */
+
         return status;
     }
 }
