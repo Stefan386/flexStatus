@@ -1,5 +1,8 @@
 package com.flex.status;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import java.time.Instant;
 import java.util.Date;
 
@@ -69,7 +72,7 @@ public class RequestLogger {
 
     public String getAllDetails(){
         String details;
-        details = packageNr + username + status + timestamp;
+        //details = packageNr + username + status + timestamp;
 
         details = "{\"Request\":\n" +
                 "{\n" +
@@ -79,6 +82,15 @@ public class RequestLogger {
                 "\"status\": "+status+",\n" +
                 "}\n" +
                 "}";
+
+        JsonObjectBuilder builder = Json.createObjectBuilder();
+        builder.add("packageNr",packageNr);
+        builder.add("username",username);
+        builder.add("timestamp",timestamp);
+        builder.add("status",status);
+
+        JsonObject jo = builder.build();
+        details = jo.toString();
 
         return details;
     }
