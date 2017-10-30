@@ -44,14 +44,24 @@ public class Controller {
     @RequestMapping("/getLoggedRequestsByUser") //return requests of one user
     public String getLoggedRequestsByUser(@RequestParam(value="username", defaultValue = "") String username){
         String details = "";
+        String JsonSeperator = ",";
+
     int i = 0;
     while(i < requestLoggerList.size()){
 
+        if(i+1 == requestLoggerList.size())
+        {
+            JsonSeperator = "";
+        }
+
+
         if(requestLoggerList.get(i).getUsername().equals(username)){
-            details = details+requestLoggerList.get(i).getAllDetails();
+            details = details+requestLoggerList.get(i).getAllDetails().toString()+JsonSeperator;
         }
         i++;
     }
+    details = "["+details+"]";
+
     return details;
     }
 }

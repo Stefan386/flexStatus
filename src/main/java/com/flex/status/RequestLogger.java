@@ -70,10 +70,11 @@ public class RequestLogger {
 
     }
 
-    public String getAllDetails(){
-        String details;
+    public JsonObject getAllDetails(){
+        //String details;
         //details = packageNr + username + status + timestamp;
 
+        /**
         details = "{\"Request\":\n" +
                 "{\n" +
                 "\"packageNr\": "+packageNr+",\n" +
@@ -82,15 +83,14 @@ public class RequestLogger {
                 "\"status\": "+status+",\n" +
                 "}\n" +
                 "}";
+         */
 
         JsonObjectBuilder builder = Json.createObjectBuilder();
         builder.add("packageNr",packageNr);
         builder.add("username",username);
         builder.add("timestamp",timestamp);
         builder.add("status",status);
-
-        JsonObject jo = builder.build();
-        details = jo.toString();
+        JsonObject details = builder.build();
 
         return details;
     }
