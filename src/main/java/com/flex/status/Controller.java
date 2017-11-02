@@ -1,29 +1,28 @@
 package com.flex.status;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalTime;
 import java.util.*;
 
 @RestController
 public class Controller {
 
-    private List<RequestLogger> requestLoggerList = new ArrayList<>();
+    @Autowired
+    private RequestLoggerService requestLoggerService;
+
 
     @RequestMapping("/getStatus") //returns the status of one package; example-URL: http://localhost:8080/getStatus?packageNr=2
     public String getStatus(@RequestParam Map<String,String> requestParams){
         String packageNr = requestParams.get("packageNr");
         String username = requestParams.get("username");
-        Status statusObj = new Status();
+        StatusService statusServiceObj = new StatusService();
         String status;
-        status = statusObj.getStatusFromApi(packageNr, username);
+        status = statusServiceObj.getStatusFromApi(packageNr, username);
 
-        //logRequest
-        RequestLogger requestLog = new RequestLogger(packageNr, username, status);
-        requestLoggerList.add(requestLog);
-        System.out.println(requestLoggerList.size());
+        requestLoggerService.addRequest(packageNr, username, status);
 
         return status;
     }
@@ -31,10 +30,9 @@ public class Controller {
     @RequestMapping("/getLoggedRequests")
     public String getLoggedRequests(){
         String details = "";
-       //int sizeOfLoggerList =  requestLoggerList.size();
        int i = 0;
-       while(i < requestLoggerList.size()){
-           details = details+requestLoggerList.get(i).getAllDetails();
+       while(i < requestLoggerService.getRequestLoggerList().size()){
+           details = details+ requestLoggerService.getRequestLoggerList().get(i).getAllDetails();
         i++;
         }
         System.out.println(details);
@@ -44,23 +42,21 @@ public class Controller {
     @RequestMapping("/getLoggedRequestsByUser") //return requests of one user
     public String getLoggedRequestsByUser(@RequestParam(value="username", defaultValue = "") String username){
         String details = "";
-        String JsonSeperator = ",";
+        String JsonSeperator = ","; //json element-seperator
 
     int i = 0;
-    while(i < requestLoggerList.size()){
+    while(i < requestLoggerService.getRequestLoggerList().size()){
 
-        if(i+1 == requestLoggerList.size())
+        if(i+1 == requestLoggerService.getRequestLoggerList().size())
         {
             JsonSeperator = "";
         }
-
-
-        if(requestLoggerList.get(i).getUsername().equals(username)){
-            details = details+requestLoggerList.get(i).getAllDetails().toString()+JsonSeperator;
+        if(requestLoggerService.getRequestLoggerList().get(i).getUsername().equals(username)){
+            details = details+ requestLoggerService.getRequestLoggerList().get(i).getAllDetails().toString()+JsonSeperator;
         }
         i++;
     }
-    details = "["+details+"]";
+    details = "["+details+"]"; //adding jsonArray prefix/sufix
 
     return details;
     }

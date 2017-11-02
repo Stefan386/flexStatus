@@ -1,27 +1,34 @@
 package com.flex.status;
 
+import org.springframework.stereotype.Service;
+
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import java.time.Instant;
 import java.util.Date;
 
+@Service
 public class RequestLogger {
     private String packageNr, username, status;
     private long timestamp;
+
+
+    public RequestLogger(){
+
+    }
 
 
     public RequestLogger(String packageNr, String username, String status){
         this.packageNr = packageNr;
         this.username = username;
         this.status = status;
+        System.out.print(toString());
 
         setPackageNr(packageNr);
         setUsername(username);
         setTimestamp();
-
         //logRequest(packageNr, username, status);
-
     }
 
     public String getPackageNr() {
@@ -93,5 +100,20 @@ public class RequestLogger {
         JsonObject details = builder.build();
 
         return details;
+    }
+    @Override
+    public String toString(){
+        return "RequestLoggerService";
+    }
+
+    public void addRequest(String packageNr, String username, String status) {
+        this.packageNr = packageNr;
+        this.username = username;
+        this.status = status;
+        System.out.print(toString());
+
+        setPackageNr(packageNr);
+        setUsername(username);
+        setTimestamp();
     }
 }
