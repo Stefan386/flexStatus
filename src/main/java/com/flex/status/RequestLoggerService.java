@@ -14,7 +14,7 @@ public class RequestLoggerService {
     }
 
 
-    public void addRequest(String packageNr, String username, String status) {
+    public void setRequest(String packageNr, String username, String status) {
         //logRequest
         RequestLogger requestLog = new RequestLogger(packageNr, username, status);
         requestLoggerList.add(requestLog);

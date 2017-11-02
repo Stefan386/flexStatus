@@ -8,7 +8,6 @@ import javax.json.JsonObjectBuilder;
 import java.time.Instant;
 import java.util.Date;
 
-@Service
 public class RequestLogger {
     private String packageNr, username, status;
     private long timestamp;

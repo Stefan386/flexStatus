@@ -12,17 +12,18 @@ public class Controller {
 
     @Autowired
     private RequestLoggerService requestLoggerService;
+    @Autowired
+    private StatusService statusService;
 
 
     @RequestMapping("/getStatus") //returns the status of one package; example-URL: http://localhost:8080/getStatus?packageNr=2
     public String getStatus(@RequestParam Map<String,String> requestParams){
+        String status;
         String packageNr = requestParams.get("packageNr");
         String username = requestParams.get("username");
-        StatusService statusServiceObj = new StatusService();
-        String status;
-        status = statusServiceObj.getStatusFromApi(packageNr, username);
 
-        requestLoggerService.addRequest(packageNr, username, status);
+        status = statusService.getStatusFromApi(packageNr, username);
+        requestLoggerService.setRequest(packageNr, username, status);
 
         return status;
     }

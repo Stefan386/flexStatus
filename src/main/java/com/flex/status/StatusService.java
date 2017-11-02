@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+@Service
 public class StatusService {
 
     public String getStatusFromApi(String packageNr, String username){ //get status from Service-Provider-API
